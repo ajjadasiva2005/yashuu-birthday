@@ -1,0 +1,140 @@
+/* ===================================================
+   YASHUU ROMANTIC FLOATING PHOTO-HEARTS EFFECT
+   Continuous dynamic photo-shower atmospheric layer
+=================================================== */
+
+/* Container: hidden until lights are turned on */
+.yashu-photo-heart-layer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5; /* Stays behind cake (10), balloons (99), message (10), buttons (1030) */
+}
+
+.yashu-photo-heart-layer.active {
+  display: block;
+}
+
+/* Individual Heart Item */
+.yashu-heart-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  animation: yashuFloatStream linear forwards;
+}
+
+/* Depth & Glow variations by size category */
+.yashu-heart-item.yashu-size-vsmall {
+  z-index: 1;
+  filter: drop-shadow(0 2px 6px rgba(255, 105, 180, 0.35));
+}
+
+.yashu-heart-item.yashu-size-small {
+  z-index: 2;
+  filter: drop-shadow(0 3px 8px rgba(255, 105, 180, 0.4)) 
+          drop-shadow(0 0 6px rgba(255, 182, 193, 0.3));
+}
+
+.yashu-heart-item.yashu-size-medium {
+  z-index: 3;
+  filter: drop-shadow(0 4px 12px rgba(255, 105, 180, 0.48)) 
+          drop-shadow(0 0 10px rgba(255, 182, 193, 0.38));
+}
+
+.yashu-heart-item.yashu-size-large {
+  z-index: 4;
+  filter: drop-shadow(0 6px 16px rgba(255, 105, 180, 0.55)) 
+          drop-shadow(0 0 14px rgba(255, 182, 193, 0.45));
+}
+
+.yashu-heart-item.yashu-size-vlarge {
+  z-index: 5;
+  filter: drop-shadow(0 8px 22px rgba(255, 105, 180, 0.65)) 
+          drop-shadow(0 0 18px rgba(255, 182, 193, 0.5));
+}
+
+/* Heart Mask using SVG clip-path */
+.yashu-heart-mask {
+  width: 100%;
+  height: 100%;
+  clip-path: url(#yashu-heart-clip);
+  -webkit-clip-path: url(#yashu-heart-clip);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Romantic soft glow & vignette overlay inside the heart */
+.yashu-heart-mask::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 182, 193, 0.08) 60%, rgba(255, 20, 147, 0.22) 100%);
+  pointer-events: none;
+}
+
+/* Photo inside heart */
+.yashu-heart-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+
+/* Multi-path dynamic stream animation using GPU translate3d */
+@keyframes yashuFloatStream {
+  0% {
+    transform: translate3d(var(--startX, 0px), var(--startY, 105vh), 0) rotate(var(--startRot, 0deg)) scale(var(--startScale, 0.85));
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--targetOpacity, 0.88);
+  }
+  50% {
+    transform: translate3d(var(--midX, 20px), var(--midY, 50vh), 0) rotate(var(--midRot, 3deg)) scale(var(--midScale, 1.02));
+    opacity: var(--targetOpacity, 0.88);
+  }
+  85% {
+    opacity: var(--targetOpacity, 0.88);
+  }
+  100% {
+    transform: translate3d(var(--endX, 0px), var(--endY, -120px), 0) rotate(var(--endRot, -5deg)) scale(var(--endScale, 0.9));
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments for mobile & small screens */
+@media (max-width: 768px) {
+  .yashu-heart-item.yashu-size-vsmall {
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.3));
+  }
+  .yashu-heart-item.yashu-size-small,
+  .yashu-heart-item.yashu-size-medium {
+    filter: drop-shadow(0 3px 8px rgba(255, 105, 180, 0.38));
+  }
+  .yashu-heart-item.yashu-size-large,
+  .yashu-heart-item.yashu-size-vlarge {
+    filter: drop-shadow(0 4px 12px rgba(255, 105, 180, 0.45));
+  }
+}
