@@ -1,3 +1,5 @@
+YASHU-BDAY-ULR : https://ajjadasiva2005.github.io/yashuu-birthday/
+
 <h1 align="center"> 🎂 Customizable Birthday Web Template 🎂 </h1>
 
 
